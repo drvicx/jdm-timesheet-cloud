@@ -1,0 +1,5 @@
+# sqltool.rc 
+urlid localhost-sa
+url jdbc:hsqldb:hsql://localhost/timesheet:9000
+username SA
+password
