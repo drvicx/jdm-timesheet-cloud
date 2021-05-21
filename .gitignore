@@ -1,3 +1,4 @@
+### Spring Boot ###
 target/
 !.mvn/wrapper/maven-wrapper.jar
 
@@ -15,3 +16,7 @@ target/
 *.iws
 *.iml
 *.ipr
+*.xml
+
+### App specific ###
+logs/user.log/**

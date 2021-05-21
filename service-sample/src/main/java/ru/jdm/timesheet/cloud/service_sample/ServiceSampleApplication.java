@@ -1,4 +1,5 @@
-package main.java.ru.jdm.timesheet.cloud.service_sample;
+//package main.java.ru.jdm.timesheet.cloud.service_sample;
+package ru.jdm.timesheet.cloud.service_sample;
 
 import ru.jdm.timesheet.cloud.IdGenerator;
 import org.springframework.boot.SpringApplication;
