@@ -25,6 +25,7 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
+    //--GET 1 RECORD BY ID
     //--check if user is exists in db: version1: bad
     //--path processing with PathVariable
     //  URL: http://localhost:8080/timesheet/user/1
