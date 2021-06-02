@@ -19,7 +19,7 @@ import java.util.List;
 
 /**
  *=USER REST-CONTROLLER
- * http://localhost:8601/api/users
+ * http://localhost:8601/users
  */
 @RestController
 @RequestMapping("users")
@@ -83,7 +83,7 @@ public class UserRestController {
         return theUser;
     }
 
-    //--mapping for DELETE /users/{userId} - Delete existing user by ID
+    //--add mapping for DELETE /users/{userId} - Delete user by ID
     //  http://localhost:8601/api/users/delete/1
     @DeleteMapping("delete/{userId}")
     public String deleteUser(@PathVariable Long userId) {
