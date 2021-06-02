@@ -10,9 +10,7 @@
         <!-- У каждого Модуля будут свои Maven-зависимости-->
         <module>cloud-eureka</module>
         <module>cloud-zuul</module>
-        <module>common</module>
-        <module>message-protocol</module>
-        <module>service-sample</module>
         <module>service-user</module>
+        <module>service-timedata</module>
     </modules>
 </project>

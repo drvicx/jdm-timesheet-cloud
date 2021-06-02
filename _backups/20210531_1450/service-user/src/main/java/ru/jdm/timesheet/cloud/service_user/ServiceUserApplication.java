@@ -6,7 +6,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 
 /**
- *=USER REST-SERVICE
+ * =USER REST-SERVICE
  */
 @EnableEurekaClient
 @SpringBootApplication
