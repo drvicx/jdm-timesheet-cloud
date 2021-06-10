@@ -1,4 +1,4 @@
-# jdm3
+# jdm-timesheet-cloud
 Timesheet 2.0 Spring Cloud project with microservices
 <br>
 
