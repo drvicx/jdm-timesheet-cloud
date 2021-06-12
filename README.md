@@ -5,6 +5,17 @@ Timesheet 2.0 Spring Cloud project with microservices
 **=CHANGE LOG**<br>
 *new at the beginning <br>
 
+05: 20210611_1800:
+- для сервисов User и Timedata реализована REST-спецификация Swagger/OpenAPI;<br>
+- теперь все ендпоинты сервисов описаны в разделе "Swagger UI" (см.ссылки ниже);<br>
+- описание ошибок и способов их решения вынесены в файл _"README_BUGS.md";_ <br>
+- найдена и исправлена ошибка с доступом к ендпоинтам Сервисов через Zuul из Swagger UI;<br>
+- в конфигурации Zuul изменен URL для доступа к сервисам.<br>
+_было:_ <br>
+http://localhost:9002/service-user/api/users/getall <br>
+_стало:_ <br>
+http://localhost:9002/api/service-user/users/getall <br>
+
 04: 20210602_1400:
 - добавлен модуль "service-timedata" для реализации REST-сервиса работы с таблицей "TIMEDATA";<br>
 - реализован весь стандартный REST-CRUD функционал;<br>
@@ -41,30 +52,27 @@ Timesheet 2.0 Spring Cloud project with microservices
   Spring Boot Starter Data JPA <br>
   Spring Boot Starter Actuator <br>
   JDBC HSQLDB 2.5.2 Connector <br>
-
-- HTTP-methods implemented for REST-controllers: <br>
-  GET, POST, PUT, DELETE <br>
-
-- HTTP-REST-endpoints and Methods for SERVICE-USER:<br>
-  GET     http://localhost:8601/api/users/getall <br>
-  GET     http://localhost:8601/api/users/getsingle/1 <br>
-  POST    http://localhost:8601/api/users/add <br>
-  PUT     http://localhost:8601/api/users/update/1 <br>
-  DELETE  http://localhost:8601/api/users/delete/1 <br>
-
-- HTTP-REST-endpoints and Methods for SERVICE-TIMEDATA:<br>
-  GET     http://localhost:8602/api/timedata/getall <br>
-  GET     http://localhost:8602/api/timedata/getsingle/1 <br>
-  POST    http://localhost:8602/api/timedata/add <br>
-  PUT     http://localhost:8602/api/timedata/update/1 <br>
-  DELETE  http://localhost:8602/api/timedata/delete/1 <br>
-
-- Прочие эндпоинты: <br>
-  1 - ["Домашняя страница Eureka"](http://localhost:9001/) <br>
-  2 - ["Актуатор для Eureka"](http://localhost:9001/actuator/health) <br>
-  3 - ["Актуатор для Zuul"](http://localhost:9002/actuator/health) <br>
-  4 - ["Актуатор для Сервиса User"](http://localhost:8601/api/actuator/health) <br>
-  5 - ["Сервис USER через Zuul"](http://localhost:9002/service-user/api/users/getall) <br>
-  6 - ["Актуатор для Сервиса Timedata"](http://localhost:8602/api/actuator/health) <br>
-  7 - ["Сервис Timedata через Zuul"](http://localhost:9002/service-timedata/api/timedata/getall) <br>
+  Springfox Swagger 2.9.2 <br>
+  Springfox Swagger UI 2.9.2 <br>
+  <br>
   
+- Available endpoints (local): <br>
+  0.1 - [Eureka Home Page](http://localhost:9001/) <br>
+  0.2 - [Eureka Actuator](http://localhost:9001/actuator/health) <br>
+  0.3 - [Zuul Actuator](http://localhost:9002/actuator/health) <br>
+
+  1.1 - [User Service - Actuator](http://localhost:8601/api/actuator/health) <br>
+  1.2 - [User Service - getAll](http://localhost:8601/api/users/getall) <br>
+  1.3 - [User Service - Swagger UI](http://localhost:8601/api/swagger-ui.html) <br>
+  1.4 - [User Service - Swagger/OpenAPI Specification (JSON)](http://localhost:8601/api/v2/api-docs) <br>
+  1.5 - [Zuul - User Service - getAll](http://localhost:9002/api/service-user/users/getall) <br>
+  1.6 - [Zuul - User Service - Swagger UI](http://localhost:9002/api/service-user/swagger-ui.html) <br>
+  1.7 - [Zuul - User Service - Swagger/OpenAPI Specification (JSON)](http://localhost:9002/api/service-user/v2/api-docs) <br>
+  
+  2.1 - [Timedata Service - Actuator](http://localhost:8602/api/actuator/health) <br>
+  2.2 - [Timedata Service - getAll](http://localhost:8602/api/timedata/getall) <br>
+  2.3 - [Timedata Service - Swagger UI](http://localhost:8602/api/swagger-ui.html) <br>
+  2.4 - [Timedata Service - Swagger/OpenAPI Specification (JSON)](http://localhost:8602/api/v2/api-docs) <br>
+  2.5 - [Zuul - Timedata Service - getAll](http://localhost:9002/api/service-timedata/timedata/getall) <br>
+  2.6 - [Zuul - Timedata Service - Swagger UI](http://localhost:9002/api/service-timedata/swagger-ui.html) <br>
+  2.7 - [Zuul - Timedata Service - Swagger/OpenAPI Specification (JSON)](http://localhost:9002/api/service-timedata/v2/api-docs) <br>  
