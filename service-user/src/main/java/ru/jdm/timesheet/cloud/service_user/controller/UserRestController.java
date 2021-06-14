@@ -3,6 +3,7 @@ package ru.jdm.timesheet.cloud.service_user.controller;
 import ru.jdm.timesheet.cloud.service_user.entity.user.User;
 import ru.jdm.timesheet.cloud.service_user.service.user.UserService;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +22,7 @@ import java.util.List;
  *=USER REST-CONTROLLER
  * http://localhost:8601/api/users
  */
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("users")
 public class UserRestController {

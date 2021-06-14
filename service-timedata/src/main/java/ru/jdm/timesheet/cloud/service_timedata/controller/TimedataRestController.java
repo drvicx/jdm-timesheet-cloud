@@ -3,6 +3,7 @@ package ru.jdm.timesheet.cloud.service_timedata.controller;
 import ru.jdm.timesheet.cloud.service_timedata.entity.timedata.Timedata;
 import ru.jdm.timesheet.cloud.service_timedata.service.timedata.TimedataService;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +22,7 @@ import java.util.List;
  *=TIMEDATA REST-CONTROLLER
  * http://localhost:8602/api/timedata
  */
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("timedata")
 public class TimedataRestController {
