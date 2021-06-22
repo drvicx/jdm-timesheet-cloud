@@ -12,5 +12,6 @@
         <module>cloud-zuul</module>
         <module>service-user</module>
         <module>service-timedata</module>
+        <module>service-orgdata</module>
     </modules>
 </project>

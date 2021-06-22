@@ -10,6 +10,8 @@ import javax.persistence.Column;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 
 /**
  *=TIMEDATA ENTITY
@@ -35,7 +37,7 @@ public class Timedata {
     //private TimedataType type;
 
     @Column(name="DATE")
-    private String date;
-    //private LocalDate date;
+    private LocalDate date;
+    //private String date;
 
 }

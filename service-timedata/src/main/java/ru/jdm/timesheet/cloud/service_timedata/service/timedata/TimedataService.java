@@ -1,6 +1,8 @@
 package ru.jdm.timesheet.cloud.service_timedata.service.timedata;
 
 import ru.jdm.timesheet.cloud.service_timedata.entity.timedata.Timedata;
+
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -9,11 +11,23 @@ import java.util.List;
  */
 public interface TimedataService {
     //--get all records
-    public List<Timedata> findAll();
+    List<Timedata> findAll();
+
     //--get single record by id
-    public Timedata findById(Long theId);
-    //--add/save/update record
-    public void save(Timedata theTimedata);
-    //--delete record by id
-    public void deleteById(Long theId);
+    Timedata findById(Long theId);
+
+    //--get records by userId
+    List<Timedata> findByUserId(Long theId);
+
+    //--get records by date
+    List<Timedata> findByDate(LocalDate date);
+
+    //--get single record by userId and date
+    Timedata findByUserIdAndDate(Long theId, LocalDate date);
+
+    //--add/save/update single record
+    void save(Timedata theTimedata);
+
+    //--delete single record by id
+    void deleteById(Long theId);
 }

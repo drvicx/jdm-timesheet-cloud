@@ -16,7 +16,7 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public UserServiceImpl(UserRepository theUserRepository) {
@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
-    //--get single record by id
+    //--get single record by userId
     @Override
     public User findById(Long theId) {
 
@@ -41,13 +41,34 @@ public class UserServiceImpl implements UserService {
         Optional<User> result = userRepository.findById(theId);
 
         //--Check if ID is present then return
-        User theUser = null;
+        User theUser;
+        //User theUser = null;
 
         if (result.isPresent()) {
             theUser = result.get();
         } else {
             // we didn't find the user with this theId value
             throw new RuntimeException("Did not find user id - " + theId);
+        }
+        return theUser;
+    }
+
+    //--get single record by personalNumber
+    @Override
+    public User findByPersonalNumber(Long theId) {
+
+        //--Fix (Java 8 solution)
+        Optional<User> result = userRepository.findByPersonalNumber(theId);
+
+        //--Check if ID is present then return
+        User theUser;
+        //User theUser = null;
+
+        if (result.isPresent()) {
+            theUser = result.get();
+        } else {
+            // we didn't find the user with this theId value
+            throw new RuntimeException("Did not find User with PersonalNumber - " + theId);
         }
         return theUser;
     }
