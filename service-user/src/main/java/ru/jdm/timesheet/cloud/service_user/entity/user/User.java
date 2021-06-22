@@ -24,25 +24,47 @@ public class User {
     @Column(name="ID")
     private Long userId;
 
+    @Column(name="PERSONALNUMBER")
+    private Long personalNumber;
+
+    @Column(name="FIRSTNAME")
+    private String firstName;
+
+    @Column(name="LASTNAME")
+    private String lastName;
+
+    @Column(name="MIDLENAME")
+    private String middleName;
+
     @Column(name="LOGIN")
     private String login;
 
-    @Column(name="NAME")
-    private String name;
+    @Column(name="POSITION_E")
+    private String positionEng;
 
-    @Column(name="SURNAME")
-    private String surname;
+    @Column(name="POSITION_R")
+    private String positionRus;
 
-    // define noArg constructors
+    @Column(name="ACCESSLEVEL")
+    private String accessLevel;
+
+
+    //--define noArg constructors
     // *default constructor
     public User() {
     }
 
     // *noArg constructors needed for Hibernate
-    public User(Long userId, String login, String name, String surname) {
+    public User(Long userId, Long personalNumber, String firstName, String lastName, String middleName, String login, String positionEng, String positionRus, String accessLevel) {
+        this.userId = userId;
+        this.personalNumber = personalNumber;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.middleName = middleName;
         this.login = login;
-        this.name = name;
-        this.surname = surname;
+        this.positionEng = positionEng;
+        this.positionRus = positionRus;
+        this.accessLevel = accessLevel;
     }
 
     //--Getters/Setters
@@ -54,6 +76,38 @@ public class User {
         this.userId = userId;
     }
 
+    public Long getPersonalNumber() {
+        return personalNumber;
+    }
+
+    public void setPersonalNumber(Long personalNumber) {
+        this.personalNumber = personalNumber;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
     public String getLogin() {
         return login;
     }
@@ -62,30 +116,44 @@ public class User {
         this.login = login;
     }
 
-    public String getName() {
-        return name;
+    public String getPositionEng() {
+        return positionEng;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPositionEng(String positionEng) {
+        this.positionEng = positionEng;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getPositionRus() {
+        return positionRus;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setPositionRus(String positionRus) {
+        this.positionRus = positionRus;
     }
 
-    // define tostring
+    public String getAccessLevel() {
+        return accessLevel;
+    }
+
+    public void setAccessLevel(String accessLevel) {
+        this.accessLevel = accessLevel;
+    }
+
+    //--define tostring
+
     @Override
     public String toString() {
-        return "User{" +
+        return "User {" +
                 "userId=" + userId +
+                ", personalNumber=" + personalNumber +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", middleName='" + middleName + '\'' +
                 ", login='" + login + '\'' +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
+                ", positionEng='" + positionEng + '\'' +
+                ", positionRus='" + positionRus + '\'' +
+                ", accessLevel='" + accessLevel + '\'' +
                 '}';
     }
 

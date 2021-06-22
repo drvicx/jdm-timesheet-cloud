@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
+import java.time.LocalDate;
 
 
 /**
@@ -16,7 +17,7 @@ import java.util.Optional;
 @Service
 public class TimedataServiceImpl implements TimedataService {
 
-    private TimedataRepository timedataRepository;
+    private final TimedataRepository timedataRepository;
 
     @Autowired
     public TimedataServiceImpl(TimedataRepository theTimedataRepository) {
@@ -41,7 +42,8 @@ public class TimedataServiceImpl implements TimedataService {
         Optional<Timedata> result = timedataRepository.findById(theId);
 
         //--Check if ID is present then return
-        Timedata theTimedata = null;
+        Timedata theTimedata;
+        //Timedata theTimedata = null;
 
         if (result.isPresent()) {
             theTimedata = result.get();
@@ -50,6 +52,27 @@ public class TimedataServiceImpl implements TimedataService {
             throw new RuntimeException("Did not find timedata id - " + theId);
         }
         return theTimedata;
+    }
+
+    //--get records by userId
+    @Override
+    public List<Timedata> findByUserId(Long theId) {
+        //--return List of Timedata Objects
+        return timedataRepository.findByUserId(theId);
+    }
+
+    //--get records by date
+    @Override
+    public List<Timedata> findByDate(LocalDate date) {
+        //--return List of Timedata Objects
+        return timedataRepository.findByDate(date);
+    }
+
+    //--get record by userId and date
+    @Override
+    public Timedata findByUserIdAndDate(Long theId, LocalDate date) {
+        //--return single Timedata Object
+        return timedataRepository.findByUserIdAndDate(theId, date);
     }
 
     //--save/update/add new record

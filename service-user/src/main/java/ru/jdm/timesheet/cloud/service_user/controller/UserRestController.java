@@ -28,7 +28,7 @@ import java.util.List;
 public class UserRestController {
 
     // User Service instance
-    private UserService userService;
+    private final UserService userService;
 
     // quick and dirty inject User Service with Constructor Injection
     @Autowired
@@ -38,21 +38,39 @@ public class UserRestController {
 
     // expose "users/getall" endpoint and return list of users
     // http://localhost:8601/api/users/getall
-    @GetMapping("getall")
+    // http://localhost:8601/api/users/all
+    @GetMapping("all")
     public List<User> findAll() {
         return userService.findAll();
     }
 
-    //--реализация из урока 464 но без Session слоя
-    //  mapping for GET employees/{employeeId}
+    //--get single record by userId
     //  http://localhost:8601/api/users/getsingle/1
-    @GetMapping("getsingle/{userId}")
-    public User getUser(@PathVariable Long userId) {
+    //  http://localhost:8601/api/users/getbyid/1
+    //  http://localhost:8601/api/users/id/1
+    @GetMapping("id/{userId}")
+    public User getUserById(@PathVariable Long userId) {
         //--
         User theUser = userService.findById(userId);
         //--
         if (theUser == null) {
-            throw new RuntimeException("User ID not found - " + userId);
+            throw new RuntimeException("User ID ("+ userId +") not found;");
+        }
+        return theUser;
+    }
+
+    //--get single record by personalNumber
+    //  http://localhost:8601/api/users/getbypersonalnumber/2001
+    //  http://localhost:8601/api/users/getbynumber/2001
+    //  http://localhost:8601/api/users/getbynum/2001
+    //  http://localhost:8601/api/users/num/2001
+    @GetMapping("num/{personalNumber}")
+    public User getUserByPersonalNumber(@PathVariable Long personalNumber) {
+        //--
+        User theUser = userService.findByPersonalNumber(personalNumber);
+        //--
+        if (theUser == null) {
+            throw new RuntimeException("User with PersonalNumber (" + personalNumber + ") not found;");
         }
         return theUser;
     }
@@ -93,12 +111,12 @@ public class UserRestController {
         User tempUser = userService.findById(userId);
         //--throw Exception if null (if finding user is not exists)
         if (tempUser == null) {
-            throw new RuntimeException("User ID not found - " + userId);
+            throw new RuntimeException("User ID (" + userId + ") not found;");
         }
         //--now call delete method
         userService.deleteById(userId);
         //--return JSON-message
-        return  "Deleted user ID - " + userId;
+        return  "User ID ("+ userId +") Deleted;";
     }
 
 }

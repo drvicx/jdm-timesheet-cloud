@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 /**
@@ -27,67 +29,94 @@ import java.util.List;
 @RequestMapping("timedata")
 public class TimedataRestController {
 
-    // Timedata Service instance
-    private TimedataService timedataService;
+    //--Timedata Service instance
+    private final TimedataService timedataService;
 
-    // quick and dirty inject Timedata Service with Constructor Injection
+    //--quick and dirty inject Timedata Service with Constructor Injection
     @Autowired
     public TimedataRestController(TimedataService theTimedataService) {
         timedataService = theTimedataService;
     }
 
-    //--mapping for GET-request - Get all records
+    //--READ/GET all records
     //  http://localhost:8602/api/timedata/getall
-    @GetMapping("getall")
+    //  http://localhost:8602/api/timedata/all
+    @GetMapping("all")
     public List<Timedata> findAll() {
         return timedataService.findAll();
     }
 
-    //--mapping for GET-request - Get single record by ID
+    //--READ/GET single record by ID
     //  http://localhost:8602/api/timedata/getsingle/1
-    @GetMapping("getsingle/{timedataId}")
-    public Timedata getTimedata(@PathVariable Long timedataId) {
+    //  http://localhost:8602/api/timedata/id/1
+    @GetMapping("id/{timedataId}")
+    public Timedata getTimedataById(@PathVariable Long timedataId) {
         //--
         Timedata theTimedata = timedataService.findById(timedataId);
         //--
         if (theTimedata == null) {
-            throw new RuntimeException("Timedata ID not found - " + timedataId);
+            throw new RuntimeException("Timedata ID not found:" + timedataId);
         }
         return theTimedata;
     }
 
-    //--mapping for POST-request - Add new timedata
+    //--READ/GET records by userId
+    //  http://localhost:8602/api/timedata/userid/1
+    @GetMapping("userid/{userId}")
+    public List<Timedata> getTimedataByUserId(@PathVariable Long userId) {
+        //--
+        List<Timedata> theTimedata = timedataService.findByUserId(userId);
+        //--check is return not empty
+        if (theTimedata == null) {
+            throw new RuntimeException("Timedata UserID not found:" + userId);
+        }
+        return theTimedata;
+    }
+
+    //--READ/GET records by date
+    //  http://localhost:8602/api/timedata/date/2021-03-02
+    @GetMapping("date/{date}")
+    public List<Timedata> getTimedataByDate(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+        //--
+        List<Timedata> theTimedata = timedataService.findByDate(date);
+        //--check is return not empty
+        if (theTimedata == null) {
+            throw new RuntimeException("Timedata with provided date (" + date + ") not found;");
+        }
+        return theTimedata;
+    }
+
+    //--READ/GET records by userId and Date
+    //  http://localhost:8602/api/timedata/userdate/1/2021-03-02
+    @GetMapping("userdate/{userId}/{date}")
+    public Timedata getTimedataByUserIdAndDate(@PathVariable Long userId, @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+        //--
+        return timedataService.findByUserIdAndDate(userId, date);
+    }
+
+    //--CREATE/POST new timedata
     //  http://localhost:8602/api/timedata/add
     @PostMapping("add")
     public Timedata addTimedata(@RequestBody Timedata theTimedata) {
-
-        //--MySQL.: also just in case they pass an id in JSON .. set id to 0
-        //          this is to force a save of new item .. instead of update
-        //--HSQLDB: no need for this trick
-        //theTimedata.setTimedataId(0L);
-
         //--call save to database method from DAO-object
         timedataService.save(theTimedata);
         //--needs to return saved object
         return theTimedata;
     }
 
-    //--mapping for PUT-request - Update existing timedata by ID
+    //--UPDATE/PUT existing timedata by ID
     //  http://localhost:8602/api/timedata/update/1
     @PutMapping("update/{timedataId}")
     public Timedata updateTimedata(@PathVariable Long timedataId, @RequestBody Timedata theTimedata) {
-        //--search object by id:
-        //  if id is not exists - create new record     //--and that is the problem
-        //theTimedata.setUserId(timedataId);            //--method not exists
-        //theTimedata.setTimedataId(timedataId);        //--and it is also not exists
-        theTimedata.setId(timedataId);                  //--correct
+        //--select record
+        theTimedata.setId(timedataId);
         //--call save to database method
         timedataService.save(theTimedata);
         //--needs to return saved object
         return theTimedata;
     }
 
-    //--mapping for DELETE-request - Delete existing timedata by ID
+    //--DELETE existing timedata by ID
     //  http://localhost:8602/api/timedata/delete/1
     @DeleteMapping("delete/{timedataId}")
     public String deleteTimedata(@PathVariable Long timedataId) {
@@ -95,12 +124,12 @@ public class TimedataRestController {
         Timedata tempTimedata = timedataService.findById(timedataId);
         //--throw Exception if null (if finding timedata is not exists)
         if (tempTimedata == null) {
-            throw new RuntimeException("Timedata ID not found - " + timedataId);
+            throw new RuntimeException("Timedata ID (" + timedataId + ") not found;");
         }
         //--now call delete method
         timedataService.deleteById(timedataId);
         //--return JSON-message
-        return  "Deleted timedata ID - " + timedataId;
+        return "Timedata ID (" + timedataId + ") Deleted;";
     }
 
 }
