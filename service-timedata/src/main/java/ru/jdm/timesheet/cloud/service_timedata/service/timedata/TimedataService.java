@@ -25,6 +25,14 @@ public interface TimedataService {
     //--get single record by userId and date
     Timedata findByUserIdAndDate(Long theId, LocalDate date);
 
+    //--2021.09.11 18:43
+    //  get timesheet records by Year and Month
+    List<Timedata> findByYearAndMonth(Short year, Short month);
+
+    //--2021.09.12 22:40
+    //  get timesheet records by UserID, Year and Month
+    List<Timedata> findByUserIdYearMonth(Long userId, Short year, Short month);
+
     //--add/save/update single record
     void save(Timedata theTimedata);
 

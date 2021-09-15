@@ -5,6 +5,22 @@ Timesheet 2.0 Spring Cloud project with microservices
 **=CHANGE LOG**<br>
 *new at the beginning <br>
 
+08: 20210915_1820:
+<pre>
+- в контроллер Сервиса Timedata добавлены новые Методы для обработки GET-запросов возвращающих предустановленные данные:
+  - добавлен метод "getTimedataByYearAndMonth" - получение данных по Году и Месяцу;
+  - добавлен метод "getTimedataByUserIdYearMonth" - получение данных по ID Сотрудника, Году и Месяцу;
+    (см. ссылки в разделе "Available endpoints (local)", пункты 2.07, 2.08);			
+- если при выполнении GET-запроса в базе данных отсутствуют записи с указанными параметрами,
+  возвращаются некоторые предустановленные значения в виде JSON-ответа:
+  - в поле "id" генерируется временный ID записи,
+  - в поле "userID" ID сотрудника остается прежним,
+  - в поле "date" дата генерируется по сетке указанного в запросе Года и Месяца,
+  - в поле "hour" отработанное время устанавливается в 0 для всех записей,
+  - в поле "type" тип записи устанавливается как "нд" (нет данных);
+  !предустановленные данные при этом НЕ сохраняются в базу т.к инициатором сохранения будет выступать фронтенд;
+</pre>
+
 07: 20210622_1220:
 <pre>
 - переработана таблица USER в БД Timesheet: добавлены новые поля, старые переименованы;
@@ -89,7 +105,7 @@ Timesheet 2.0 Spring Cloud project with microservices
 
   1.01 - [User Service - Actuator](http://localhost:8601/api/actuator/health) <br>
   1.02 - [User Service - getAll](http://localhost:8601/api/users/all) <br>
-  1.03 - [User Service - getById](http://localhost:8601/api/users/id/2) <br>
+  1.03 - [User Service - getById](http://localhost:8601/api/users/id/7) <br>
   1.04 - [User Service - getByPersonalNumber](http://localhost:8601/api/users/num/2001) <br>
   
   1.05 - [User Service - Swagger UI](http://localhost:8601/api/swagger-ui.html) <br>
@@ -101,17 +117,20 @@ Timesheet 2.0 Spring Cloud project with microservices
   
   2.01 - [Timedata Service - Actuator](http://localhost:8602/api/actuator/health) <br>
   2.02 - [Timedata Service - getAll](http://localhost:8602/api/timedata/all) <br>
-  2.03 - [Timedata Service - getByUserId](http://localhost:8602/api/timedata/userid/1) <br>
-  2.04 - [Timedata Service - getByDate](http://localhost:8602/api/timedata/date/2021-03-02) <br>
-  2.05 - [Timedata Service - getById](http://localhost:8602/api/timedata/id/2) <br>
-  2.06 - [Timedata Service - getByUserIdAndDate](http://localhost:8602/api/timedata/userdate/1/2021-03-02) <br>
+  2.03 - [Timedata Service - getByUserId](http://localhost:8602/api/timedata/userid/7) <br>
+  2.04 - [Timedata Service - getByDate](http://localhost:8602/api/timedata/date/2020-12-31) <br>
+  2.05 - [Timedata Service - getById](http://localhost:8602/api/timedata/id/853) <br>
+  2.06 - [Timedata Service - getByUserIdAndDate](http://localhost:8602/api/timedata/userdate/7/2020-12-31) <br>
+
+  2.07 - [Timedata Service - getTimedataByYearAndMonth](http://localhost:8602/api/timedata/yearmonth/2020/12) <br>
+  2.08 - [Timedata Service - getTimedataByUserIdYearMonth](http://localhost:8602/api/timedata/useryearmonth/7/2020/12) <br>
   
-  2.07 - [Timedata Service - Swagger UI](http://localhost:8602/api/swagger-ui.html) <br>
-  2.08 - [Timedata Service - Swagger/OpenAPI Specification (JSON)](http://localhost:8602/api/v2/api-docs) <br>
+  2.09 - [Timedata Service - Swagger UI](http://localhost:8602/api/swagger-ui.html) <br>
+  2.10 - [Timedata Service - Swagger/OpenAPI Specification (JSON)](http://localhost:8602/api/v2/api-docs) <br>
   
-  2.09 - [Zuul - Timedata Service - getAll](http://localhost:9002/api/service-timedata/timedata/all) <br>
-  2.10 - [Zuul - Timedata Service - Swagger UI](http://localhost:9002/api/service-timedata/swagger-ui.html) <br>
-  2.11 - [Zuul - Timedata Service - Swagger/OpenAPI Specification (JSON)](http://localhost:9002/api/service-timedata/v2/api-docs) <br>  
+  2.11 - [Zuul - Timedata Service - getAll](http://localhost:9002/api/service-timedata/timedata/all) <br>
+  2.12 - [Zuul - Timedata Service - Swagger UI](http://localhost:9002/api/service-timedata/swagger-ui.html) <br>
+  2.13 - [Zuul - Timedata Service - Swagger/OpenAPI Specification (JSON)](http://localhost:9002/api/service-timedata/v2/api-docs) <br>  
 
   3.01 - [Orgdata Service - Actuator](http://localhost:8603/api/actuator/health) <br>
   3.02 - [Orgdata Service - getAll](http://localhost:8603/api/orgdata/all) <br>

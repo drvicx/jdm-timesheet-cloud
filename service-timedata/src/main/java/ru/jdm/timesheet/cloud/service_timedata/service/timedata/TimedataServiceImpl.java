@@ -75,6 +75,22 @@ public class TimedataServiceImpl implements TimedataService {
         return timedataRepository.findByUserIdAndDate(theId, date);
     }
 
+    //--2021.09.11 18:43
+    //  get timesheet records by Year and Month
+    @Override
+    public List<Timedata> findByYearAndMonth(Short year, Short month) {
+        //--return List of Timedata Objects
+        return timedataRepository.findByYearAndMonth(year, month);
+    }
+
+    //--2021.09.12 22:40
+    //  get timesheet records by UserID, Year and Month
+    @Override
+    public List<Timedata> findByUserIdYearMonth(Long userId, Short year, Short month) {
+        //--return List of Timedata Objects
+        return timedataRepository.findByUserIdYearMonth(userId, year, month);
+    }
+
     //--save/update/add new record
     @Override
     public void save(Timedata theTimedata) {
