@@ -7,7 +7,7 @@ Timesheet 2.0 Spring Cloud project with microservices
 
 09: 20210930_1115:
 <pre>
-- проведена оптимизация Контроллера Сервиса Timedata (TimedataRestController): все проверки перенесены на сервисный слой (TimedataServiceImpl);
+- проведена оптимизация Контроллера Сервиса Timedata (TimedataRestController): проверка данных перенесена на сервисный слой (TimedataServiceImpl);
 </pre>
 
 08: 20210915_1820:
