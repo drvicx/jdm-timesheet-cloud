@@ -5,6 +5,11 @@ Timesheet 2.0 Spring Cloud project with microservices
 **=CHANGE LOG**<br>
 *new at the beginning <br>
 
+09: 20210930_1115:
+<pre>
+- проведена оптимизация Контроллера Сервиса Timedata (TimedataRestController): все проверки перенесены на сервисный слой (TimedataServiceImpl);
+</pre>
+
 08: 20210915_1820:
 <pre>
 - в контроллер Сервиса Timedata добавлены новые Методы для обработки GET-запросов возвращающих предустановленные данные:
