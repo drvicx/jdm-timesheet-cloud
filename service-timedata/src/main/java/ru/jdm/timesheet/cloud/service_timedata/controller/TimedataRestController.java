@@ -42,234 +42,66 @@ public class TimedataRestController {
     }
 
     //--READ/GET all records
-    //  http://localhost:8602/api/timedata/getall
     //  http://localhost:8602/api/timedata/all
     @GetMapping("all")
     public List<Timedata> findAll() {
+        //--логика проверки перенесена на сервисный слой
         return timedataService.findAll();
     }
 
     //--READ/GET single record by ID
-    //  http://localhost:8602/api/timedata/getsingle/1
     //  http://localhost:8602/api/timedata/id/1
     @GetMapping("id/{timedataId}")
     public Timedata getTimedataById(@PathVariable Long timedataId) {
-        //--
-        Timedata theTimedata = timedataService.findById(timedataId);
-        //--
-        if (theTimedata == null) {
-            throw new RuntimeException("Timedata ID not found:" + timedataId);
-        }
-        return theTimedata;
+        //--логика проверки перенесена на сервисный слой
+        return timedataService.findById(timedataId);
     }
 
     //--READ/GET records by userId
     //  http://localhost:8602/api/timedata/userid/1
     @GetMapping("userid/{userId}")
     public List<Timedata> getTimedataByUserId(@PathVariable Long userId) {
-        //--
-        List<Timedata> theTimedata = timedataService.findByUserId(userId);
-        //--check is return not empty
-        if (theTimedata == null) {
-            throw new RuntimeException("Timedata UserID not found:" + userId);
-        }
-        return theTimedata;
+        //--логика проверки перенесена на сервисный слой
+        return timedataService.findByUserId(userId);
     }
 
     //--READ/GET records by date
-    //  http://localhost:8602/api/timedata/date/2021-03-02
+    //  http://localhost:8602/api/timedata/date/2020-12-01
     @GetMapping("date/{date}")
     public List<Timedata> getTimedataByDate(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
-        //--
-        List<Timedata> theTimedata = timedataService.findByDate(date);
-        //--check is return not empty
-        if (theTimedata == null) {
-            throw new RuntimeException("Timedata with provided date (" + date + ") not found;");
-        }
-        return theTimedata;
+        //--логика проверки перенесена на сервисный слой
+        return timedataService.findByDate(date);
     }
 
     //--READ/GET records by userId and Date
-    //  http://localhost:8602/api/timedata/userdate/1/2021-03-02
+    //  http://localhost:8602/api/timedata/userdate/1/2020-12-01
     @GetMapping("userdate/{userId}/{date}")
     public Timedata getTimedataByUserIdAndDate(@PathVariable Long userId, @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
-        //--
+        //--логика проверки перенесена на сервисный слой
         return timedataService.findByUserIdAndDate(userId, date);
     }
 
-    //--2021.09.11 18:43
     //  GET all timesheet records by Year and Month
     //  http://localhost:8602/api/timedata/yearmonth/2020/1
+    //  *2021.09.11 18:43, 2021.09.29 11:50
     @GetMapping("yearmonth/{year}/{month}")
     public List<Timedata> getTimedataByYearAndMonth(@PathVariable Short year, @PathVariable Short month) {
-        //--create list of objects
-        //List<Timedata> theTimedata = timedataService.findByYearAndMonth(year, month);
-
-        //  !проверка на null в данном случае НЕ корректная, т.к если не будет записей в БД,
-        //   объект все-равно будет создан, но он будет пустым, а нам нужна проверка на содержимое Списка
-        //if (theTimedata == null) {
-        //    throw new RuntimeException("Timedata with provided Year.Month (" + year + "." + month + ") not found;");
-        //}
-
-        //--just return without checks
-        //return timedataService.findByYearAndMonth(year, month);
-
-        //--2021.09.12 12:30
-        //--проверяем что Список содержит объекты
-        //if (theTimedata.isEmpty()) {
-            //--тут сразу выбрасывается исключение в лог и приложение продолжает работать,
-            //  но хотелось-бы получить ответ об ошибке в виде JSON
-        //    throw new RuntimeException("Timedata with provided Year.Month (" + year + "." + month + ") not found;");
-        //}
-        //--возвращаем результат: возвращать можно или null, или объект того типа, который указан в сигнатуре метода
-        //return theTimedata;
-
-
-        //--2021.09.14 00:40
-        //  create list of objects
-        List<Timedata> theTimedata = timedataService.findByYearAndMonth(year, month);
-
-        //--check if List of Objects isNot empty
-        if (theTimedata.isEmpty()) {
-
-            //1. создаем объект для поля "date" типа LocalDate используя значения переданных в метод аргументов
-            LocalDate userDate = LocalDate.of(year, month, 1);
-
-            //2. определяем первую и последнюю Дату и День месяца по Месяцу
-            LocalDate firstDate = userDate.with(TemporalAdjusters.firstDayOfMonth()); 	//= 2021-09-01
-            LocalDate lastDate = userDate.with(TemporalAdjusters.lastDayOfMonth()); 	//= 2021-09-30
-            int firstDay = firstDate.getDayOfMonth();                                   //= 1
-            int lastDay = lastDate.getDayOfMonth();                                     //= 30
-
-            //3. заполняем Список Объектов Timedata на лету создавая их
-            List<Timedata> preDefinedDataList = new ArrayList<Timedata>();
-
-            //--список идентификаторов пользователей из таблицы USER
-            ArrayList<Long> userIds = new ArrayList<Long>();
-            userIds.add(1L);
-            userIds.add(2L);
-            userIds.add(3L);
-            userIds.add(4L);
-            userIds.add(5L);
-            userIds.add(6L);
-            userIds.add(7L);
-
-            //--генерируем базу для рандомного id-шника
-            //int rndMin = 1000, rndMax = 5000;
-            //int randIdBase = (int) ((Math.random() * (rndMax - rndMin)) + rndMin);
-
-            //--устанавливаем начальный идентификатор вручную
-            int fromId = 10000;
-            int currentId = 0;
-
-            //--во внешнем цикле обходим Список идентификаторов Сотрудников
-            for (Long userId : userIds) {
-                //--во внутреннем цикле создаем Список Объектов Сотрудников по сетке дней Месяца
-                for (int i = firstDay; i <= lastDay; i++) {
-
-                    currentId = ++fromId;                                   //--сначала инкремент к начальному Идентификатору, затем его сохранение;
-
-                    LocalDate newDate = LocalDate.of(year, month, i);
-                    Timedata preDefinedData = new Timedata();
-
-                    preDefinedData.setId((long) currentId);                 // @Column(name="ID")       -- private Long        id;
-                    preDefinedData.setUserId(userId);                       // @Column(name="USERID")   -- private Long        userId;
-                    preDefinedData.setDate(newDate);                        // @Column(name="DATE")     -- private LocalDate   date;
-                    preDefinedData.setHour(0);                              // @Column(name="HOUR")     -- private Integer     hour;
-                    preDefinedData.setType("нд");                           // @Column(name="TYPE_")    -- private String      type;
-
-                    //--добавляем Объект в список (данные об 1 дне по 1 сотруднику)
-                    preDefinedDataList.add(preDefinedData);
-                }
-            }
-            //--возвращаем список Объектов с предустановленными значениями (дефолтные значения Timedata для всех Сотрудников за 1 Месяц)
-            return preDefinedDataList;
-        }
-        //--if not empty - return List of Timedata Objects
-        return theTimedata;
+        //--логика проверки перенесена на сервисный слой
+        return timedataService.findByYearAndMonth(year, month);
     }
 
-
-    //--2021.09.12 22:40
-    //  GET all timesheet records by UserID, Year and Month
+    //--GET all timesheet records by UserID, Year and Month
     //  http://localhost:8602/api/timedata/useryearmonth/1/2020/12
+    //  *2021.09.12 22:40
     @GetMapping("useryearmonth/{userId}/{year}/{month}")
     public List<Timedata> getTimedataByUserIdYearMonth(@PathVariable Long userId, @PathVariable Short year, @PathVariable Short month) {
-        //--create list of objects
-        List<Timedata> theTimedata = timedataService.findByUserIdYearMonth(userId, year, month);
-        //--check if List of Objects isNot empty
-        if (theTimedata.isEmpty()) {
-            //--if empty - throw exception
-            //throw new RuntimeException("Timedata for UserId ("+ userId +") with provided Year.Month (" + year + "." + month + ") not found;");
-
-            //--2021.09.13 18:05
-            //  if empty - return pre-defined data
-
-            //-создаем объект для поля "date" типа LocalDate
-            //LocalDate timedataDate = LocalDate.of(2021, 9, 1);         //--явно указываем дату
-            //LocalDate userDate = LocalDate.of(year, month, 1);         //--создаем дату из параметров: test1
-
-            //-определяем последний день месяца по Году и Месяцу
-            //LocalDate lastDay = userDate.with(TemporalAdjusters.lastDayOfMonth()); 	//2021-09-30
-
-            //Timedata preDefinedUserTData = new Timedata();
-            //preDefinedUserTData.setId(null);                    // @Column(name="ID")       -- private Long        id;
-            //preDefinedUserTData.setUserId(userId);              // @Column(name="USERID")   -- private Long        userId;
-            //preDefinedUserTData.setDate(null);                  // @Column(name="DATE")     -- private LocalDate   date;
-            //preDefinedUserTData.setDate(userDate);              // test1: дата из параметров - как есть
-            //preDefinedUserTData.setDate(lastDay);               // test2: дата из параметров - последний день месяца
-            //preDefinedUserTData.setHour(0);                     // @Column(name="HOUR")     -- private Integer     hour;
-            //preDefinedUserTData.setType("?");                   // @Column(name="TYPE_")    -- private String      type;
-
-            //--добавляем Объект в список (данные об 1 дне по 1 сотруднику)
-            //theTimedata.add(preDefinedUserTData);
-
-            //--2021.09.13 21:20
-            //--но нам нужно не 1 Объект, а по кол-ву дней в Месяце (вся сетка дней месяца)
-
-            //1. создаем объект для поля "date" типа LocalDate используя значения переданных в метод аргументов
-            LocalDate userDate = LocalDate.of(year, month, 1);
-
-            //2. определяем первую и последнюю Дату и День месяца по Месяцу
-            LocalDate firstDate = userDate.with(TemporalAdjusters.firstDayOfMonth()); 	//= 2021-09-01
-            LocalDate lastDate = userDate.with(TemporalAdjusters.lastDayOfMonth()); 	//= 2021-09-30
-
-            int firstDay = firstDate.getDayOfMonth();       //= 1
-            int lastDay = lastDate.getDayOfMonth();         //= 30
-
-            //3. заполняем Список Объектов Timedata на лету создавая их
-            List<Timedata> preDefinedDataList = new ArrayList<Timedata>();
-            //--генерируем базу для рандомного id-шника
-            int rndMin = 20000, rndMax = 50000;
-            int randIdBase = (int) ((Math.random() * (rndMax - rndMin)) + rndMin);
-            //Long randId = new Long(randNum);       //!WARNING: Unnecessary boxing 'new Long(randNum)'
-            //Long randIdBase = (long) randNum;      //!WARNING: Local variable is redundant
-
-            for (int i = firstDay; i <= lastDay; i++) {
-
-                LocalDate newDate =  LocalDate.of(year, month, i);
-                Timedata preDefinedData = new Timedata();
-
-                preDefinedData.setId((long) randIdBase + (long) i);     // @Column(name="ID")       -- private Long        id;
-                preDefinedData.setUserId(userId);                       // @Column(name="USERID")   -- private Long        userId;
-                preDefinedData.setDate(newDate);                        // @Column(name="DATE")     -- private LocalDate   date;
-                preDefinedData.setHour(0);                              // @Column(name="HOUR")     -- private Integer     hour;
-                preDefinedData.setType("нд");                           // @Column(name="TYPE_")    -- private String      type;
-
-                //--добавляем Объект в список (данные об 1 дне по 1 сотруднику)
-                preDefinedDataList.add(preDefinedData);
-            }
-            //--возвращаем список Объектов с предустановленными значениями (дефолтные значения Timedata для 1 сотрудника за 1 месяц)
-            return preDefinedDataList;
-        }
-        //--if not empty - return List of Timedata Objects
-        return theTimedata;
+        //--логика проверки перенесена на сервисный слой
+        return timedataService.findByUserIdYearMonth(userId, year, month);
     }
 
-
-    //--2021.09.12 15:20
     //--Ендпоинт "/error" на который должен происходить автоматический переход при возникновении HTTP-ошибок (404,500 etc)
     //  http://localhost:8602/api/timedata/error
+    //  *2021.09.12 15:20
     //  как это работает (точнее не работает) сейчас:
     //  1. делаем GET запрос который пытается получить несуществующую в БД запись
     //     http://localhost:8602/api/timedata/yearmonth/2022/1
@@ -322,18 +154,19 @@ public class TimedataRestController {
 
     //--DELETE existing timedata by ID
     //  http://localhost:8602/api/timedata/delete/1
-    @DeleteMapping("delete/{timedataId}")
+    //  *2021.09.29 18:20
+    //@DeleteMapping("delete/{timedataId}")
+    @DeleteMapping(value = "delete/{timedataId}", produces = "application/json")
     public String deleteTimedata(@PathVariable Long timedataId) {
-        //--create object by find record by id
-        Timedata tempTimedata = timedataService.findById(timedataId);
-        //--throw Exception if null (if finding timedata is not exists)
-        if (tempTimedata == null) {
-            throw new RuntimeException("Timedata ID (" + timedataId + ") not found;");
-        }
-        //--now call "delete" method
+        //--call "delete" method
+        //  *логика проверки перенесена на сервисный слой
         timedataService.deleteById(timedataId);
-        //--return JSON-message
-        return "Timedata ID (" + timedataId + ") Deleted;";
+        //--return content-type: text/plain
+        //return "TimedataService: Data with provided ID(" + timedataId + ") was Deleted;";
+        //--return content-type: ..
+        //  строка возвращается в валидном json-формате, но content-type все-равно остается text/plain
+        //  после добавления в аннотацию параметра "produces" - content-type стал = application/json
+        return "{ \"status\": \"success\", \"message\": \"TimedataService: Data with provided ID(" + timedataId + ") was Deleted;\" }";
     }
 
 }
