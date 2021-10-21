@@ -6,6 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.GenerationType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Column;
+import java.time.LocalDate;
 
 //import lombok.Data;
 //import lombok.NoArgsConstructor;
@@ -48,6 +49,11 @@ public class User {
     @Column(name="ACCESSLEVEL")
     private String accessLevel;
 
+    @Column(name="HIRED")
+    private LocalDate hireDate;
+
+    @Column(name="FIRED")
+    private LocalDate fireDate;
 
     //--define noArg constructors
     // *default constructor
@@ -55,7 +61,7 @@ public class User {
     }
 
     // *noArg constructors needed for Hibernate
-    public User(Long userId, Long personalNumber, String firstName, String lastName, String middleName, String login, String positionEng, String positionRus, String accessLevel) {
+    public User(Long userId, Long personalNumber, String firstName, String lastName, String middleName, String login, String positionEng, String positionRus, String accessLevel, LocalDate hireDate, LocalDate fireDate) {
         this.userId = userId;
         this.personalNumber = personalNumber;
         this.firstName = firstName;
@@ -65,6 +71,8 @@ public class User {
         this.positionEng = positionEng;
         this.positionRus = positionRus;
         this.accessLevel = accessLevel;
+        this.hireDate = hireDate;
+        this.fireDate = fireDate;
     }
 
     //--Getters/Setters
@@ -140,8 +148,23 @@ public class User {
         this.accessLevel = accessLevel;
     }
 
-    //--define tostring
+    public LocalDate getHireDate() {
+        return hireDate;
+    }
 
+    public void setHireDate(LocalDate hireDate) {
+        this.hireDate = hireDate;
+    }
+
+    public LocalDate getFireDate() {
+        return fireDate;
+    }
+
+    public void setFireDate(LocalDate fireDate) {
+        this.fireDate = fireDate;
+    }
+
+    //--define tostring
     @Override
     public String toString() {
         return "User {" +
@@ -154,6 +177,8 @@ public class User {
                 ", positionEng='" + positionEng + '\'' +
                 ", positionRus='" + positionRus + '\'' +
                 ", accessLevel='" + accessLevel + '\'' +
+                ", hireDate='" + hireDate + '\'' +
+                ", fireDate='" + fireDate + '\'' +
                 '}';
     }
 

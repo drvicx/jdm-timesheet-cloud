@@ -44,15 +44,11 @@ public class OrgdataRestController {
 
     //--READ/GET single record by ID
     //  http://localhost:8603/api/orgdata/id/1
+    //  *2021.10.21
     @GetMapping("id/{orgdataId}")
     public Orgdata getOrgdataById(@PathVariable Long orgdataId) {
-        //--
-        Orgdata theOrgdata = orgdataService.findById(orgdataId);
-        //--
-        if (theOrgdata == null) {
-            throw new RuntimeException("Orgdata ID not found:" + orgdataId);
-        }
-        return theOrgdata;
+        //--логика проверки перенесена на сервисный слой
+        return orgdataService.findById(orgdataId);
     }
 
     //--CREATE/POST new timedata

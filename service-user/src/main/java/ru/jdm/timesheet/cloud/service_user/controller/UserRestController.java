@@ -45,54 +45,40 @@ public class UserRestController {
     }
 
     //--get single record by userId
-    //  http://localhost:8601/api/users/getsingle/1
-    //  http://localhost:8601/api/users/getbyid/1
-    //  http://localhost:8601/api/users/id/1
+    //  http://localhost:8601/api/users/getsingle/7
+    //  http://localhost:8601/api/users/getbyid/7
+    //  http://localhost:8601/api/users/id/7
+    //  *2021.10.21
     @GetMapping("id/{userId}")
     public User getUserById(@PathVariable Long userId) {
-        //--
-        User theUser = userService.findById(userId);
-        //--
-        if (theUser == null) {
-            throw new RuntimeException("User ID ("+ userId +") not found;");
-        }
-        return theUser;
+        //--логика проверки перенесена на сервисный слой
+        return userService.findById(userId);
     }
 
     //--get single record by personalNumber
-    //  http://localhost:8601/api/users/getbypersonalnumber/2001
-    //  http://localhost:8601/api/users/getbynumber/2001
-    //  http://localhost:8601/api/users/getbynum/2001
-    //  http://localhost:8601/api/users/num/2001
+    //  http://localhost:8601/api/users/getbypersonalnumber/36
+    //  http://localhost:8601/api/users/getbynumber/36
+    //  http://localhost:8601/api/users/getbynum/36
+    //  http://localhost:8601/api/users/num/36
     @GetMapping("num/{personalNumber}")
     public User getUserByPersonalNumber(@PathVariable Long personalNumber) {
-        //--
-        User theUser = userService.findByPersonalNumber(personalNumber);
-        //--
-        if (theUser == null) {
-            throw new RuntimeException("User with PersonalNumber (" + personalNumber + ") not found;");
-        }
-        return theUser;
+        //  *2021.10.21
+        //--логика проверки перенесена на сервисный слой
+        return userService.findByPersonalNumber(personalNumber);
     }
 
     //--mapping for POST user - Add new user
     //  http://localhost:8601/api/users/add
     @PostMapping("add")
     public User addUser(@RequestBody User theUser) {
-
-        //--MySQL.: also just in case they pass an id in JSON .. set id to 0
-        //          this is to force a save of new item .. instead of update
-        //--HSQLDB: no need for this trick
-        //theUser.setUserId(0L);
-
-        //--call save to database method from DAO-object
+        //--call save to database method from service layer
         userService.save(theUser);
         //--needs to return saved object
         return theUser;
     }
 
     //--mapping for PUT user - Update existing user by ID
-    //  http://localhost:8601/api/users/update/1
+    //  http://localhost:8601/api/users/update/7
     @PutMapping("update/{userId}")
     public User updateUser(@PathVariable Long userId, @RequestBody User theUser) {
         //--search object by id
@@ -104,7 +90,7 @@ public class UserRestController {
     }
 
     //--mapping for DELETE /users/{userId} - Delete existing user by ID
-    //  http://localhost:8601/api/users/delete/1
+    //  http://localhost:8601/api/users/delete/7
     @DeleteMapping("delete/{userId}")
     public String deleteUser(@PathVariable Long userId) {
         //--create object by find record by id

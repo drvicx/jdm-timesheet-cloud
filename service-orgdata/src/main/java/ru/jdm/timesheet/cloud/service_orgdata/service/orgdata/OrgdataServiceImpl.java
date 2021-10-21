@@ -17,10 +17,13 @@ import java.util.Optional;
 public class OrgdataServiceImpl implements OrgdataService {
 
     private final OrgdataRepository orgdataRepository;
+    private final OrgdataGenerator orgdataGenerator;      //*2021.10.21
 
     @Autowired
-    public OrgdataServiceImpl(OrgdataRepository theOrgdataRepository) {
+    public OrgdataServiceImpl(OrgdataRepository theOrgdataRepository, OrgdataGenerator theOrgdataGenerator) {
+        //this.orgdataRepository = theOrgdataRepository;
         orgdataRepository = theOrgdataRepository;
+        orgdataGenerator = theOrgdataGenerator;
     }
 
     // findAll() Method Implementation
@@ -31,20 +34,18 @@ public class OrgdataServiceImpl implements OrgdataService {
     }
 
     //--get single record by id
+    //  *2021.10.21
     @Override
     public Orgdata findById(Long theId) {
 
-        //--Check if ID is present then return
+        //--Try to create object - if record is not exists - "result" is NULL (Java 8 solution)
         Optional<Orgdata> result = orgdataRepository.findById(theId);
-        Orgdata theOrgdata;
-        //Orgdata theOrgdata = null;
+        Orgdata orgdataObj;
 
-        if (result.isPresent()) {
-            theOrgdata = result.get();
-        } else {
-            throw new RuntimeException("Did not find orgdata id: " + theId);
-        }
-        return theOrgdata;
+        //--check if record/object is present (functional style)
+        orgdataObj = result.orElseGet(orgdataGenerator::getDefaultOrgdataObj);
+        //--then return
+        return orgdataObj;
     }
 
     //--save/update/add new record

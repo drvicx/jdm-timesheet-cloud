@@ -32,6 +32,12 @@ public class Orgdata {
     @Column(name="DEPNAME")
     private String depName;
 
+    @Column(name="OKUD")
+    private String okud;
+
+    @Column(name="OKPO")
+    private String okpo;
+
     @Column(name="DEPBOSS")
     private String depBoss;
 
