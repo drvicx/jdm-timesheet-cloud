@@ -5,9 +5,13 @@ Timesheet 2.0 Spring Cloud project with microservices
 **=CHANGE LOG**<br>
 *new at the beginning <br>
 
-09: 20210930_1115:
+09: 20211021_1600:
 <pre>
 - проведена оптимизация Контроллера Сервиса Timedata (TimedataRestController): проверка данных перенесена на сервисный слой (TimedataServiceImpl);
+- проведена оптимизация Контроллера Сервиса User (UserRestController): проверка данных перенесена на сервисный слой (UserServiceImpl);
+- проведена оптимизация Контроллера Сервиса Orgdata (OrgdataRestController): проверка данных перенесена на сервисный слой (OrgdataServiceImpl);
+- для всех сервисов реализован вывод предустановленных данных в случае отсутствия запрашиваемых данных в БД (см.примеры ниже);
+- обновлен скрипт формирования БД HSQL (расположен в каталоге "_database/hsqldb-2.5.1/hsqldb");
 </pre>
 
 08: 20210915_1820:
@@ -147,4 +151,18 @@ Timesheet 2.0 Spring Cloud project with microservices
   3.06 - [Zuul - Orgdata Service - getAll](http://localhost:9002/api/service-orgdata/orgdata/all) <br>
   3.07 - [Zuul - Orgdata Service - Swagger UI](http://localhost:9002/api/service-orgdata/swagger-ui.html) <br>
   3.08 - [Zuul - Orgdata Service - Swagger/OpenAPI Specification (JSON)](http://localhost:9002/api/service-orgdata/v2/api-docs) <br>
-  
+  <br>
+
+**=APP-PREVIEW**
+
+- ответ "по-умолчанию" (когда запрашиваемых данных в БД нет) от сервиса "orgdata-service"
+
+![предпосмотр](_preview/preview_20211021_defaultData_orgdata-service.png?raw=true)
+
+- ответ "по-умолчанию" (когда запрашиваемых данных в БД нет) от сервиса "user-service"
+
+![предпосмотр](_preview/preview_20211021_defaultData_user-service.png?raw=true)
+
+- ответ "по-умолчанию" (когда запрашиваемых данных в БД нет) от сервиса "timedata-service"
+
+![предпосмотр](_preview/preview_20211021_defaultData_timedata-service.png?raw=true)

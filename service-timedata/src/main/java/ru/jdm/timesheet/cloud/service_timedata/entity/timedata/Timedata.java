@@ -9,6 +9,7 @@ import javax.persistence.Column;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+//import lombok.Builder;
 
 import java.time.LocalDate;
 
@@ -16,6 +17,7 @@ import java.time.LocalDate;
 /**
  *=TIMEDATA ENTITY
  */
+//@Builder
 @NoArgsConstructor
 @Data
 @Entity

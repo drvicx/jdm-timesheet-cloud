@@ -17,10 +17,14 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserGenerator userGenerator;      //*2021.10.21
 
+    //*2021.10.21
     @Autowired
-    public UserServiceImpl(UserRepository theUserRepository) {
+    public UserServiceImpl(UserRepository theUserRepository, UserGenerator theUserGenerator) {
+        //this.userRepository = theUserRepository;
         userRepository = theUserRepository;
+        userGenerator = theUserGenerator;
     }
 
     // findAll() Method Implementation
@@ -33,7 +37,6 @@ public class UserServiceImpl implements UserService {
     //--get single record by userId
     @Override
     public User findById(Long theId) {
-
         //--Warning: Required type User provided Optional<User>
         //return userRepository.findById(theId);
 
@@ -41,36 +44,35 @@ public class UserServiceImpl implements UserService {
         Optional<User> result = userRepository.findById(theId);
 
         //--Check if ID is present then return
-        User theUser;
-        //User theUser = null;
+        User userObj;
+        //User userObj = null;
 
-        if (result.isPresent()) {
-            theUser = result.get();
-        } else {
-            // we didn't find the user with this theId value
-            throw new RuntimeException("Did not find user id - " + theId);
-        }
-        return theUser;
+        //--old style: check if record/object is present
+        //if (result.isPresent()) {
+        //    userObj = result.get();
+        //} else {
+            // user record not found by ID exception
+            //throw new RuntimeException("UserService: Record with provided ID (" + theId + ") not found;");
+            //userObj = userGenerator.getDefaultUserObj();
+        //}
+        //return userObj;
+
+        //--functional style
+        userObj = result.orElseGet(userGenerator::getDefaultUserObj);
+        return userObj;
     }
 
     //--get single record by personalNumber
     @Override
-    public User findByPersonalNumber(Long theId) {
-
+    public User findByPersonalNumber(Long personalNumber) {
         //--Fix (Java 8 solution)
-        Optional<User> result = userRepository.findByPersonalNumber(theId);
-
+        Optional<User> result = userRepository.findByPersonalNumber(personalNumber);
         //--Check if ID is present then return
-        User theUser;
-        //User theUser = null;
-
-        if (result.isPresent()) {
-            theUser = result.get();
-        } else {
-            // we didn't find the user with this theId value
-            throw new RuntimeException("Did not find User with PersonalNumber - " + theId);
-        }
-        return theUser;
+        User userObj;
+        //--check if record/object is present (functional style)
+        userObj = result.orElseGet(userGenerator::getDefaultUserObj);
+        //--then return
+        return userObj;
     }
 
     //--save/update/add new record
