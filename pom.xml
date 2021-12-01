@@ -13,5 +13,6 @@
         <module>service-user</module>
         <module>service-timedata</module>
         <module>service-orgdata</module>
+        <module>service-timesheet</module>
     </modules>
 </project>

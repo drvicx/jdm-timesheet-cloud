@@ -19,13 +19,13 @@ public class UserGenerator {
         //  *id объекта/записи явно не заполняем: userData.setId(null) - не нужно
         userData.setUserId(null);
         userData.setPersonalNumber(null);
-        userData.setLogin("bender_oi");
-        userData.setFirstName("Остап");
-        userData.setLastName("Бендер");
-        userData.setMiddleName("Ибрагимович");
-        userData.setPositionEng("faker");
-        userData.setPositionRus("Бизнесмен");
-        userData.setAccessLevel("full");
+        userData.setLogin("null_nn");
+        userData.setFirstName("Нулл");
+        userData.setLastName("Нуллов");
+        userData.setMiddleName("Нуллович");
+        userData.setPositionEng("Workless");
+        userData.setPositionRus("Безработный");
+        userData.setAccessLevel("none");
         userData.setHireDate(null);
         userData.setFireDate(null);
         //(!)при установке полей объекта null значения явно указывать не нужно

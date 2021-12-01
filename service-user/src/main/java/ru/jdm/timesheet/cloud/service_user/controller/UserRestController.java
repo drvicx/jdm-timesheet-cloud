@@ -20,11 +20,15 @@ import java.util.List;
 
 /**
  *=USER REST-CONTROLLER
- * http://localhost:8601/api/users
+ * http://localhost:8601/api/all
  */
+//--@RequestMapping("user")  --http://localhost:8601/api/user/all                   --path "/user" is redundant when we use Zuul proxy;
+//                           --http://localhost:9002/api/service-user/users/all     --via Zuul;
+//                           --http://localhost:8601/api/all                        --shortest version;
+//                           --http://localhost:9002/api/service-user/all           --via Zuul;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("users")
+@RequestMapping("")
 public class UserRestController {
 
     // User Service instance

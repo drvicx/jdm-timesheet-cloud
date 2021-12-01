@@ -25,11 +25,15 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *=TIMEDATA REST-CONTROLLER
- * http://localhost:8602/api/timedata
+ * http://localhost:8602/api/all
  */
+//--@RequestMapping("timedata") --http://localhost:8602/api/timedata/all                   --path "/timedata" is redundant when we use Zuul proxy;
+//                              --http://localhost:9002/api/service-timedata/timedata/all  --via Zuul;
+//                              --http://localhost:8602/api/all                            --shortest version;
+//                              --http://localhost:9002/api/service-timedata/all           --via Zuul;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("timedata")
+@RequestMapping("")
 public class TimedataRestController {
 
     //--Timedata Service instance

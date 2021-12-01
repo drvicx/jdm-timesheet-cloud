@@ -1,9 +1,24 @@
 # jdm-timesheet-cloud
-Timesheet 2.0 Spring Cloud project with microservices
+Timesheet 2.0 - Spring Cloud Timesheet project with microservices
+<br>
+
+**=ЛОКАЛЬНЫЕ ССЫЛКИ**<br>
+1. [Дамп основной БД HSQLDB (v1.0) - для основных сервисов](https://github.com/drvicx/jdm-timesheet-cloud/tree/main/_database/hsqldb-2.5.1/hsqldb)
+2. [Дамп БД HSQLDB (v2.0) - для сервиса "service-timesheet"](https://github.com/drvicx/jdm-timesheet-cloud/tree/main/_database/hsqldb-2.5.1/hsqldb)
+2. [Демонстрационные скриншоты rest-сервисов на разных этапах](https://github.com/drvicx/jdm-timesheet-cloud/tree/main/_preview)
 <br>
 
 **=CHANGE LOG**<br>
 *new at the beginning <br>
+
+10: 20211120_1500:
+<pre>
+- укорочены URL-ы для работы с основными сервисами - убраны префиксы сервисов /timedata, /user, /orgdata;
+- обновлен дамп основной БД HSQL (v1.0) - обезличены персональные данные (фиктивные имена) + добавлены поля со ссылками на фото сотрудника и портфолио;
+- создан доп. сервис "service-timesheet" который делает выборку из всех таблиц БД (Spring Data REST);
+- сервис "service-timesheet" временно переведен в режим работы "read-only" (запрещены HTTP-методы: POST,PUT,DELETE);
+- создана вторая БД HSQL для сервиса (v2.0) "service-timesheet" - добавлены поля со ссылками на фото сотрудника и портфолио;
+</pre>
 
 09: 20211021_1600:
 <pre>
@@ -107,32 +122,32 @@ Timesheet 2.0 Spring Cloud project with microservices
   Springfox Swagger UI 2.9.2 <br>
   <br>
   
-- Available endpoints (local): <br>
+- Available endpoints for services "orgdata", "user", "timedata" (local): <br>
   0.01 - [Eureka Home Page](http://localhost:9001/) <br>
   0.02 - [Eureka Actuator](http://localhost:9001/actuator/health) <br>
   0.03 - [Zuul Actuator](http://localhost:9002/actuator/health) <br>
 
   1.01 - [User Service - Actuator](http://localhost:8601/api/actuator/health) <br>
-  1.02 - [User Service - getAll](http://localhost:8601/api/users/all) <br>
-  1.03 - [User Service - getById](http://localhost:8601/api/users/id/7) <br>
-  1.04 - [User Service - getByPersonalNumber](http://localhost:8601/api/users/num/2001) <br>
+  1.02 - [User Service - getAll](http://localhost:8601/api/all) <br>
+  1.03 - [User Service - getById](http://localhost:8601/api/id/7) <br>
+  1.04 - [User Service - getByPersonalNumber](http://localhost:8601/api/num/2001) <br>
   
   1.05 - [User Service - Swagger UI](http://localhost:8601/api/swagger-ui.html) <br>
   1.06 - [User Service - Swagger/OpenAPI Specification (JSON)](http://localhost:8601/api/v2/api-docs) <br>
   
-  1.07 - [Zuul - User Service - getAll](http://localhost:9002/api/service-user/users/all) <br>
+  1.07 - [Zuul - User Service - getAll](http://localhost:9002/api/service-user/all) <br>
   1.08 - [Zuul - User Service - Swagger UI](http://localhost:9002/api/service-user/swagger-ui.html) <br>
   1.09 - [Zuul - User Service - Swagger/OpenAPI Specification (JSON)](http://localhost:9002/api/service-user/v2/api-docs) <br>
   
   2.01 - [Timedata Service - Actuator](http://localhost:8602/api/actuator/health) <br>
-  2.02 - [Timedata Service - getAll](http://localhost:8602/api/timedata/all) <br>
-  2.03 - [Timedata Service - getByUserId](http://localhost:8602/api/timedata/userid/7) <br>
-  2.04 - [Timedata Service - getByDate](http://localhost:8602/api/timedata/date/2020-12-31) <br>
-  2.05 - [Timedata Service - getById](http://localhost:8602/api/timedata/id/853) <br>
-  2.06 - [Timedata Service - getByUserIdAndDate](http://localhost:8602/api/timedata/userdate/7/2020-12-31) <br>
+  2.02 - [Timedata Service - getAll](http://localhost:8602/api/all) <br>
+  2.03 - [Timedata Service - getByUserId](http://localhost:8602/api/userid/7) <br>
+  2.04 - [Timedata Service - getByDate](http://localhost:8602/api/date/2020-12-31) <br>
+  2.05 - [Timedata Service - getById](http://localhost:8602/api/id/853) <br>
+  2.06 - [Timedata Service - getByUserIdAndDate](http://localhost:8602/api/userdate/7/2020-12-31) <br>
 
-  2.07 - [Timedata Service - getTimedataByYearAndMonth](http://localhost:8602/api/timedata/yearmonth/2020/12) <br>
-  2.08 - [Timedata Service - getTimedataByUserIdYearMonth](http://localhost:8602/api/timedata/useryearmonth/7/2020/12) <br>
+  2.07 - [Timedata Service - getTimedataByYearAndMonth](http://localhost:8602/api/yearmonth/2020/12) <br>
+  2.08 - [Timedata Service - getTimedataByUserIdYearMonth](http://localhost:8602/api/useryearmonth/7/2020/12) <br>
   
   2.09 - [Timedata Service - Swagger UI](http://localhost:8602/api/swagger-ui.html) <br>
   2.10 - [Timedata Service - Swagger/OpenAPI Specification (JSON)](http://localhost:8602/api/v2/api-docs) <br>
@@ -142,27 +157,69 @@ Timesheet 2.0 Spring Cloud project with microservices
   2.13 - [Zuul - Timedata Service - Swagger/OpenAPI Specification (JSON)](http://localhost:9002/api/service-timedata/v2/api-docs) <br>  
 
   3.01 - [Orgdata Service - Actuator](http://localhost:8603/api/actuator/health) <br>
-  3.02 - [Orgdata Service - getAll](http://localhost:8603/api/orgdata/all) <br>
-  3.03 - [Orgdata Service - getById](http://localhost:8603/api/orgdata/id/1) <br>
+  3.02 - [Orgdata Service - getAll](http://localhost:8603/api/all) <br>
+  3.03 - [Orgdata Service - getById](http://localhost:8603/api/id/1) <br>
 
   3.04 - [Orgdata Service - Swagger UI](http://localhost:8603/api/swagger-ui.html) <br>
   3.05 - [Orgdata Service - Swagger/OpenAPI Specification (JSON)](http://localhost:8603/api/v2/api-docs) <br>
 
   3.06 - [Zuul - Orgdata Service - getAll](http://localhost:9002/api/service-orgdata/orgdata/all) <br>
   3.07 - [Zuul - Orgdata Service - Swagger UI](http://localhost:9002/api/service-orgdata/swagger-ui.html) <br>
-  3.08 - [Zuul - Orgdata Service - Swagger/OpenAPI Specification (JSON)](http://localhost:9002/api/service-orgdata/v2/api-docs) <br>
+  3.08 - [Zuul - Orgdata Service - Swagger/OpenAPI Specification (JSON)](http://localhost:9002/api/service-orgdata/v2/api-docs) <br><br>
+
+- Available endpoints for "service-timesheet" (local): <br>
+  1.01 - [Timesheet Service - Orgdata - getAll](http://localhost:8600/api/orgdatas) -- multiple records <br>
+  1.02 - [Timesheet Service - Orgdata - getById](http://localhost:8600/api/orgdatas/1) -- single record <br>
+  1.03 - [Timesheet Service - Orgdata - findByRecordId](http://localhost:8600/api/orgdatas/search/findByRecordId?id=1) -- single <br>
+
+  2.01 - [Timesheet Service - User - getAll](http://localhost:8600/api/users) -- multiple <br>
+  2.02 - [Timesheet Service - User - getById](http://localhost:8600/api/users/1) -- single <br>
+  2.03 - [Timesheet Service - User - findById](http://localhost:8600/api/users/search/findByUserId?id=1) -- single <br>
+  2.04 - [Timesheet Service - User - findByPersonalNumber](http://localhost:8600/api/users/search/findByPersonalNumber?num=562) -- single <br>
+
+  3.01 - [Timesheet Service - Timedata - getAll](http://localhost:8600/api/timedatas) -- paged, 1st 20 records <br>
+  3.02 - [Timesheet Service - Timedata - getAll](http://localhost:8600/api/timedatas?page=0&size=30) -- paged, 1st 30 <br>
+  3.03 - [Timesheet Service - Timedata - getAll](http://localhost:8600/api/timedatas?page=1&size=30) -- paged, 2nd 30 <br>
+  
+  3.04 - [Timesheet Service - Timedata - getById](http://localhost:8600/api/timedatas/1) -- single <br>
+  3.05 - [Timesheet Service - Timedata - getAll](http://localhost:8600/api/timedatas/search/findTimedataById?id=1) -- paged, 1st 20 <br>
+  
+  3.06 - [Timesheet Service - Timedata - findByUserId](http://localhost:8600/api/timedatas/search/findByUserId?id=1) -- paged, 1st 20 <br>
+  3.07 - [Timesheet Service - Timedata - findByUserId](http://localhost:8600/api/timedatas/search/findByUserId?id=1&page=0&size=30) -- paged, 1st 30 <br>
+  3.08 - [Timesheet Service - Timedata - findByUserId](http://localhost:8600/api/timedatas/search/findByUserId?id=1&page=1&size=30) -- paged, 2nd 30 <br>
+  
+  3.09 - [Timesheet Service - Timedata - findByDate](http://localhost:8600/api/timedatas/search/findByDate?date=2020-09-01) -- paged, 1 day of All users <br>
+  3.10 - [Timesheet Service - Timedata - findByUserIdAndDate](http://localhost:8600/api/timedatas/search/findByUserIdAndDate?id=1&date=2020-09-01) -- 1 day of 1 user <br>
+  3.11 - [Timesheet Service - Timedata - findByUserIdAndYearMonth](http://localhost:8600/api/timedatas/search/findByUserIdAndYearMonth?id=2&year=2020&month=09) -- 1 month of 1 user <br>
+  3.12 - [Timesheet Service - Timedata - findByYearMonth](http://localhost:8600/api/timedatas/search/findByYearMonth?year=2020&month=09) -- 1 month of All users <br>
+
+  4.01 - [Timesheet Service - Relational - Timedatas from User](http://localhost:8600/api/users/2/timedata) -- all Timedata records by User ID <br>
+  4.02 - [Timesheet Service - Relational - User from timedata](http://localhost:8600/api/timedatas/31/user) -- single User record/info by Timedata ID <br>
+
   <br>
 
 **=APP-PREVIEW**
 
+- ответ от сервиса "timesheet-service" - раздел "orgdatas"
+
+![предпросмотр](_preview/preview_20211201_timesheet-service_orgdatas.png?raw=true)
+
+- ответ от сервиса "timesheet-service" - раздел "users"
+
+![предпросмотр](_preview/preview_20211201_timesheet-service_users.png?raw=true)
+
+- ответ от сервиса "timesheet-service" - раздел "timedatas"
+
+![предпросмотр](_preview/preview_20211201_timesheet-service_timedatas.png?raw=true)
+
 - ответ "по-умолчанию" (когда запрашиваемых данных в БД нет) от сервиса "orgdata-service"
 
-![предпосмотр](_preview/preview_20211021_defaultData_orgdata-service.png?raw=true)
+![предпросмотр](_preview/preview_20211120_defaultData_orgdata-service.png?raw=true)
 
 - ответ "по-умолчанию" (когда запрашиваемых данных в БД нет) от сервиса "user-service"
 
-![предпосмотр](_preview/preview_20211021_defaultData_user-service.png?raw=true)
+![предпросмотр](_preview/preview_20211120_defaultData_user-service.png?raw=true)
 
 - ответ "по-умолчанию" (когда запрашиваемых данных в БД нет) от сервиса "timedata-service"
 
-![предпосмотр](_preview/preview_20211021_defaultData_timedata-service.png?raw=true)
+![предпросмотр](_preview/preview_20211021_defaultData_timedata-service.png?raw=true)
