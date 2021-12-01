@@ -19,11 +19,15 @@ import java.util.List;
 
 /**
  *=ORGDATA REST-CONTROLLER
- * http://localhost:8602/api/orgdata
+ * http://localhost:8603/api/all
  */
+//--@RequestMapping("orgdata")  --http://localhost:8603/api/orgdata/all                  --path "/orgdata" is redundant when we use Zuul proxy;
+//                              --http://localhost:9002/api/service-orgdata/orgdata/all  --via Zuul;
+//                              --http://localhost:8603/api/all                          --shortest version;
+//                              --http://localhost:9002/api/service-orgdata/all          --via Zuul;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("orgdata")
+@RequestMapping("")
 public class OrgdataRestController {
 
     //--Orgdata Service instance
