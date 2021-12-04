@@ -30,9 +30,11 @@ public class Timedata {
     @JoinColumn(name = "USERID", nullable = false)
     private User user;
 
-    //--this field mapping is not required when ManyToOne relation is used on that field
-    //@Column(name="USERID")
-    //private Long userId;
+    //--PROBLEM(fixed): field "userId" is not exposed at JSON-response when ManyToOne relation used
+    @Column(name="USERID", insertable = false, updatable = false)
+    private Long userId;
+    //........... default: insertable = true,  updatable = true
+    //........... Q: But how we can insert or update this field with this (false) flags?
 
     @Column(name="HOUR")
     private Integer hour;

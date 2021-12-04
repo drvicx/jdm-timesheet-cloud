@@ -41,14 +41,14 @@ public interface TimedataRepository extends JpaRepository<Timedata, Long> {
     Page<Timedata> findById(@RequestParam("id") Long id, Pageable pageable);
 
 
-    //--Query method for get paginated Timedata data by User ID (with param "id")
+    //--GET Timedata records (paginated) by UserID (v1) -- with Query method and param "id"
     //  - SQL:
     //    select * from timedata where userid=?
     //  - endpoint:
     //    http://localhost:8600/api/timedatas/search/findByUserId?id=1
-    //Page<Timedata> findByUserId(@RequestParam("id") Long id, Pageable pageable);
+    Page<Timedata> findByUserId(@RequestParam("id") Long id, Pageable pageable);
     //
-    //!RUNTIME-ERROR:
+    //!RUNTIME-ERROR(fixed):
     //      Caused by: org.springframework.data.mapping.PropertyReferenceException:
     //          no property id found for type User! Traversed path: Timedata.user.
     //
@@ -60,10 +60,13 @@ public interface TimedataRepository extends JpaRepository<Timedata, Long> {
     //      Caused by: java.lang.IllegalArgumentException:
     //          Parameter value [1] did not match expected type [ru.jdm.timesheet.cloud.service_timesheet.entity.User (n/a)]
     //
-    //--FIXED
+    //--FIXED (see changes in Timedata Entity class)
+
+
+    //--GET Timedata records (listed) by UserID (v2) -- with parametrized native query
     //  http://localhost:8600/api/timedatas/search/findByUserId?id=1
-    @Query(value = "select * from Timedata td where td.userId = :id", nativeQuery = true)
-    List<Timedata> findByUserId(@Param("id") Long id);
+    //@Query(value = "select * from Timedata td where td.userId = :id", nativeQuery = true)
+    //List<Timedata> findByUserId(@Param("id") Long id);
 
 
     //--find records by Date
@@ -89,19 +92,19 @@ public interface TimedataRepository extends JpaRepository<Timedata, Long> {
     //  http://localhost:8600/api/timedatas/search/findByUserIdAndDate?id=1&date=2020-09-01
     //  *we dont need pagination for single-record data
     //
-    //Timedata findByUserIdAndDate(@RequestParam("id") Long id, @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date);
+    Timedata findByUserIdAndDate(@RequestParam("id") Long id, @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date);
     //
     //=RUNTIME-ERROR:
     //      Caused by: org.springframework.data.mapping.PropertyReferenceException:
     //             No property id found for type User! Traversed path: Timedata.user.
     //
-
+    // FIXED (see changes in Timedata Entity class)
 
     //--GET Timedata records by UserID and Date (v2) -- with parametrized native query
     //  http://localhost:8600/api/timedatas/search/findByUserIdAndDate?id=1&date=2020-09-01
     //
-    @Query(value = "select * from Timedata td where td.userId = :id and td.date = :date", nativeQuery = true)
-    Timedata findByUserIdAndDate(@RequestParam("id") Long id, @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date);
+    //@Query(value = "select * from Timedata td where td.userId = :id and td.date = :date", nativeQuery = true)
+    //Timedata findByUserIdAndDate(@RequestParam("id") Long id, @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date);
 
 
     //--GET Timedata records by UserID, Year and Month (Native Query)

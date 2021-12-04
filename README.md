@@ -11,6 +11,12 @@ Timesheet 2.0 - Spring Cloud Timesheet project with microservices
 **=CHANGE LOG**<br>
 *new at the beginning <br>
 
+11: 20211204_2040:
+<pre>
+- найдена и исправлена проблема:
+  в JSON-ответе для Сущности Timedata НЕ отображалось поле "userId" которое было задействовано в ManyToOne связи;
+</pre>
+
 10: 20211201_1750:
 <pre>
 - укорочены URL-ы для работы с основными сервисами - убраны префиксы сервисов /timedata, /user, /orgdata;
@@ -212,7 +218,7 @@ Timesheet 2.0 - Spring Cloud Timesheet project with microservices
 
 - ответ от сервиса "timesheet-service" - раздел "timedatas"
 
-![предпросмотр](_preview/preview_20211201_timesheet-service_timedatas.png?raw=true)
+![предпросмотр](_preview/preview_20211204_timesheet-service_timedatas.png?raw=true)
 
 - ответ "по-умолчанию" (когда запрашиваемых данных в БД нет) от сервиса "orgdata-service"
 
