@@ -42,11 +42,14 @@ public class User {
     @Column(name="FIRSTNAME")
     private String firstName;
 
+    @Column(name="MIDLENAME")
+    private String middleName;
+
     @Column(name="LASTNAME")
     private String lastName;
 
-    @Column(name="MIDLENAME")
-    private String middleName;
+    @Column(name="BIRTHDATE")
+    private LocalDate birthDate;
 
     @Column(name="LOGIN")
     private String login;
@@ -56,6 +59,30 @@ public class User {
 
     @Column(name="POSITION_R")
     private String positionRus;
+
+    @Column(name="PHONE_WORK")
+    private String phoneWork;
+
+    @Column(name="PHONE_PERS")
+    private String phonePers;
+
+    @Column(name="EMAIL_WORK")
+    private String emailWork;
+
+    @Column(name="EMAIL_PERS")
+    private String emailPers;
+
+    @Column(name="PHOTO_LINK")
+    private String photoLink;
+
+    @Column(name="SOCIAL_LINK1")
+    private String socialLink1;
+
+    @Column(name="SOCIAL_LINK2")
+    private String socialLink2;
+
+    @Column(name="SOCIAL_LINK3")
+    private String socialLink3;
 
     @Column(name="ACCESSLEVEL")
     private String accessLevel;

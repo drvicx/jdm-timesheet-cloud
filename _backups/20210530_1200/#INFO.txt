@@ -1,5 +1,0 @@
-
- ---AVAILABLE HTTP REST ENDPOINTS
- 
-	http://devhost2012:8601/users
-	http://devhost2012:8601/user/1

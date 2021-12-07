@@ -11,6 +11,16 @@ Timesheet 2.0 - Spring Cloud Timesheet project with microservices
 **=CHANGE LOG**<br>
 *new at the beginning <br>
 
+12: 20211207_2300:
+<pre>
+- для сервиса SERVICE-TIMESHEET создана новая HSQL БД "timesheet-udm" с новой структурой таблицы USER
+  (отдельная БД была создана для максимального сходства моделей с проектом курса на Udemy);
+- в таблицу ORGDATA добавлены новые поля для хранения ссылок на логотипы организации (LOGO1,LOGO2);
+- изменена модель данных для сущности User сервиса SERVICE-TIMESHEET;
+- изменена модель данных для сущности Orgdata сервиса SERVICE-TIMESHEET;
+  (см. скриншоты с JSON-ответами)
+</pre>
+
 11: 20211204_2040:
 <pre>
 - найдена и исправлена проблема:
@@ -210,11 +220,11 @@ Timesheet 2.0 - Spring Cloud Timesheet project with microservices
 
 - ответ от сервиса "timesheet-service" - раздел "orgdatas"
 
-![предпросмотр](_preview/preview_20211201_timesheet-service_orgdatas.png?raw=true)
+![предпросмотр](_preview/preview_20211207_timesheet-service_orgdatas.png?raw=true)
 
 - ответ от сервиса "timesheet-service" - раздел "users"
 
-![предпросмотр](_preview/preview_20211201_timesheet-service_users.png?raw=true)
+![предпросмотр](_preview/preview_20211207_timesheet-service_users.png?raw=true)
 
 - ответ от сервиса "timesheet-service" - раздел "timedatas"
 
