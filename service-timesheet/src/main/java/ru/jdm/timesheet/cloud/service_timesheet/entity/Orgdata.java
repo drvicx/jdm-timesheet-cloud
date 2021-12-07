@@ -41,6 +41,12 @@ public class Orgdata {
     @Column(name="RESPONDER")
     private String responder;
 
+    @Column(name="LOGO1")
+    private String logo1;
+
+    @Column(name="LOGO2")
+    private String logo2;
+
     @Column(name="BEGINDATE")
     private LocalDate dateBegin;
 
