@@ -13,7 +13,7 @@ Timesheet 2.0 - Spring Cloud Timesheet project with microservices
 
 13: 20211213_2240:
 <pre>
-- для сервиса SERVICE-TIMESHEET реализован новый Метод и ендпоинт - поиск всех User (см. ендпоинт 2.02);
+- для сервиса SERVICE-TIMESHEET реализован новый Метод и ендпоинт findAll - поиск всех User (см. ендпоинт 2.02);
 </pre>
 
 12: 20211207_2300:
@@ -196,7 +196,7 @@ Timesheet 2.0 - Spring Cloud Timesheet project with microservices
   1.03 - [Timesheet Service - Orgdata - findByRecordId](http://localhost:8600/api/orgdatas/search/findByRecordId?id=1) -- single <br>
 
   2.01 - [Timesheet Service - User - getAll](http://localhost:8600/api/users) -- multiple <br>
-  2.02 - [Timesheet Service - User - findAll](http://localhost:8600/api/users/search/getAll) -- multiple <br>
+  2.02 - [Timesheet Service - User - findAll](http://localhost:8600/api/users/search/findAll) -- multiple <br>
   2.03 - [Timesheet Service - User - getById](http://localhost:8600/api/users/1) -- single <br>
   2.04 - [Timesheet Service - User - findById](http://localhost:8600/api/users/search/findByUserId?id=1) -- single <br>
   2.05 - [Timesheet Service - User - findByPersonalNumber](http://localhost:8600/api/users/search/findByPersonalNumber?num=562) -- single <br>
