@@ -7,6 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 //import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
 
 
 /**
@@ -15,6 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 @CrossOrigin("http://localhost:4200")
 public interface UserRepository extends JpaRepository<User, Long> {
     //--custom methods
+
+    //--GET User records (listed) -- with non parametrized native query
+    //  http://localhost:8600/api/users/search/findAll
+    @Query(value = "select * from User", nativeQuery = true)
+    List<User> findAll();
 
     //--Query method for get NON paginated User data by User ID (with param "id")
     //  - on the background JPA executes SQL like: select * from user where id=?
